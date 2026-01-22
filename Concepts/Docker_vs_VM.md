@@ -1,4 +1,4 @@
-## 1️⃣ Docker vs Virtual Machine (VM)
+## 🐳 Docker vs 🖥️ Virtual Machine (VM)
 
 ### Virtual Machine
 
@@ -46,3 +46,4 @@ Docker runs **applications**, not entire computers.
 | Good for OS isolation | Good for app isolation |
 
 👉 **For WordPress stacks → Docker is ideal**
+
