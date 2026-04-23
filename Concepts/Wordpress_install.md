@@ -1,4 +1,4 @@
-## ✅ WordPress Installation Process (Conceptual)
+## ✅ WordPress Installation Process 
 
 ### First-time access:
 
