@@ -1,5 +1,4 @@
 
-CREATE DATABASE wordpress_db;
-CREATE USER 'wp_user'@'%' IDENTIFIED BY 'secure_user_password';
-GRANT ALL PRIVILEGES ON wordpress_db.* TO 'wp_user'@'%';
-FLUSH PRIVILEGES;
+CREATE DATABASE IF NOT EXISTS wordpress_db;
+DB_PASSWORD=$(cat /run/secrets/db_password)
+mysql -e "CREATE USER 'wp_user'@'%' IDENTIFIED BY '${DB_PASSWORD}';"
