@@ -25,11 +25,11 @@ help:
 	@echo "  $(GREEN)make help$(NC)        - Show this help message"
 
 build: $(DATA_DIR)/mariadb $(DATA_DIR)/wordpress
-	docker-compose -f $(COMPOSE_FILE) build
+	docker compose -f $(COMPOSE_FILE) build
 
 up: build
 	@echo "$(YELLOW)Starting containers..$(NC)"
-	docker-compose -f $(COMPOSE_FILE) up -d
+	docker compose -f $(COMPOSE_FILE) up -d
 	@echo "$(GREEN)✓ Containers started!$(NC)"
 	@echo "$(BLUE)Access your site at: https://kmaeda.42.fr$(NC)"
 
@@ -37,7 +37,7 @@ all: build up
 
 down:
 	@echo "$(YELLOW)Stopping containers..$(NC)"
-	docker-compose -f $(COMPOSE_FILE) down
+	docker compose -f $(COMPOSE_FILE) down
 	@echo "$(GREEN)✓ Containers stopped!$(NC)"
 
 re: down up
@@ -45,16 +45,16 @@ re: down up
 
 restart:
 	@echo "$(YELLOW)Restarting containers..$(NC)"
-	docker-compose -f $(COMPOSE_FILE) restart
+	docker compose -f $(COMPOSE_FILE) restart
 	@echo "$(GREEN)✓ Containers restarted!$(NC)"
 
 logs:
 	@echo "$(YELLOW)Showing logs..$(NC)"
-	docker-compose -f $(COMPOSE_FILE) logs -f
+	docker compose -f $(COMPOSE_FILE) logs -f
 
 clean:
 	@echo "$(YELLOW)Removing containers and images..$(NC)"
-	docker-compose -f $(COMPOSE_FILE) down --rmi all
+	docker compose -f $(COMPOSE_FILE) down --rmi all
 	@echo "$(GREEN)✓ All containers and images cleaned!$(NC)"
 
 fclean: clean
@@ -63,7 +63,7 @@ fclean: clean
 	read answer; \
 	case "$$answer" in \
 		y|Y|yes|YES) \
-			docker-compose -f $(COMPOSE_FILE) down -v --rmi all; \
+			docker compose -f $(COMPOSE_FILE) down -v --rmi all; \
 			sudo rm -rf $(DATA_DIR)/wordpress/* $(DATA_DIR)/mariadb/* || true; \
 			echo "$(GREEN)✓ Full clean completed!$(NC)" ;; \
 		*) \
