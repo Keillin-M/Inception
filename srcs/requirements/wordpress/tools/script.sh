@@ -18,7 +18,7 @@ done
 # Wait for the database and user to be ready
 MAX_TRIES=30
 COUNT=0
-until mariadb -h mariadb -u "${MYSQL_USER}" -p"${DB_PASSWORD}" "${MYSQL_DATABASE}" -e ";" 2>/dev/null; do
+until mariadb -h mariadb -u "${WORDPRESS_DB_USER}" -p"${DB_PASSWORD}" "${WORDPRESS_DB_NAME}" -e ";" 2>/dev/null; do
     COUNT=$((COUNT + 1))
     if [ $COUNT -ge $MAX_TRIES ]; then
         echo "ERROR: Could not connect to database after $MAX_TRIES attempts"
@@ -41,8 +41,8 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
     echo "Creating wp-config.php.."
     wp config create \
         --path="$WP_PATH" \
-        --dbname="$MYSQL_DATABASE" \
-        --dbuser="$MYSQL_USER" \
+        --dbname="$WORDPRESS_DB_NAME" \
+        --dbuser="$WORDPRESS_DB_USER" \
         --dbpass="$DB_PASSWORD" \
         --dbhost=mariadb \
         --allow-root
@@ -80,4 +80,4 @@ echo "Starting PHP-FPM.."
 # PHP-FPM needs a dir for its socket/PID file
 mkdir -p /run/php
 
-exec php-fpm7.4 -F
+exec php-fpm8.2 -F
