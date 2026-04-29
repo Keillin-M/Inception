@@ -13,15 +13,16 @@ RUN apt-get update && apt-get install -y \
   php7.4-zip \
   wget \
   curl \
+  netcat-openbsd \
+  mariadb-client \
   && ln -s /usr/sbin/php-fpm7.4 /usr/local/bin/php-fpm \
   && rm -rf /var/lib/apt/lists/*
 
 # Create WordPress directory
 WORKDIR /var/www/html
 
-# Copy PHP-FPM configuration (correct version)
+# Copy PHP-FPM configuration
 COPY www.conf /etc/php/7.4/fpm/pool.d/
-
 
 # Copy and set permissions for setup script
 COPY tools/script.sh /usr/local/bin/
