@@ -6,7 +6,7 @@ YELLOW = \033[0;33m
 NC = \033[0m
 
 COMPOSE_FILE = srcs/docker-compose.yml
-DATA_DIR = /Users/$(USER)/data
+DATA_DIR = /home/$(USER)/data
 
 $(DATA_DIR)/mariadb:
 	mkdir -p $(DATA_DIR)/mariadb
