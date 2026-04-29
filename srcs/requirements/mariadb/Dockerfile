@@ -14,4 +14,3 @@ RUN mkdir /run/mysqld && \
     chmod +x /usr/local/bin/script.sh
 
 CMD ["/usr/local/bin/script.sh"]
-
