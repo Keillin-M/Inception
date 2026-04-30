@@ -2,6 +2,7 @@ services:
   nginx:
     build:
       context: requirements/nginx
+    image: nginx
     container_name: nginx
     depends_on:
       - wordpress
@@ -17,6 +18,7 @@ services:
 
   wordpress:
     build: requirements/wordpress
+    image: wordpress
     container_name: wordpress
     depends_on:
       - mariadb
@@ -38,6 +40,7 @@ services:
 
   mariadb:
     build: requirements/mariadb
+    image: mariadb
     container_name: mariadb
     networks:
       - inception-network
@@ -67,7 +70,7 @@ volumes:
       type: none
       device: /home/${USER}/data/wordpress
       o: bind
-  
+
 secrets:
   db_root_password:
     file: ../secrets/db_root_password.txt
@@ -77,4 +80,3 @@ secrets:
     file: ../secrets/wp_admin_password.txt
   wp_user_password:
     file: ../secrets/wp_user_password.txt
-    
