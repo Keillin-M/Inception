@@ -32,7 +32,7 @@ services:
       WORDPRESS_DB_USER: ${MYSQL_USER}
     secrets:
       - db_password
-      - wp_admin_password
+      - wp_superuser_password
       - wp_user_password
     restart: always
 
@@ -73,8 +73,8 @@ secrets:
     file: ../secrets/db_root_password.txt
   db_password:
     file: ../secrets/db_password.txt
-  wp_admin_password:
-    file: ../secrets/wp_admin_password.txt
+  wp_superuser_password:
+    file: ../secrets/wp_superuser_password.txt
   wp_user_password:
     file: ../secrets/wp_user_password.txt
     

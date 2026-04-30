@@ -6,7 +6,7 @@ cd "$WP_PATH"
 
 # Read password from secrets
 DB_PASSWORD=$(cat /run/secrets/db_password)
-WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
+WP_SUPERUSER_PASSWORD=$(cat /run/secrets/wp_superuser_password)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
 # Wait for MariaDB port to open
@@ -53,7 +53,7 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --url="https://${DOMAIN_NAME}" \
         --title="Inception" \
         --admin_user="$WP_ADMIN_USER" \
-        --admin_password="$WP_ADMIN_PASSWORD" \
+        --admin_password="$WP_SUPERUSER_PASSWORD" \
         --admin_email="$WP_ADMIN_EMAIL" \
         --skip-email \
         --allow-root
@@ -64,17 +64,16 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --user_pass="$WP_USER_PASSWORD" \
         --role=subscriber \
         --allow-root
-    
-    # Set secure permissions
-    find "$WP_PATH" -type d -exec chmod 750 {} \;
-    find "$WP_PATH" -type f -exec chmod 640 {} \;
-    chown -R www-data:www-data "$WP_PATH"
 
     echo "WordPress setup complete."
 else
     echo "WordPress already initialized, skipping setup."
 fi
 
+# Set secure permissions
+find "$WP_PATH" -type d -exec chmod 750 {} \;
+find "$WP_PATH" -type f -exec chmod 640 {} \;
+chown -R www-data:www-data "$WP_PATH"
 
 echo "Starting PHP-FPM.."
 # PHP-FPM needs a dir for its socket/PID file
