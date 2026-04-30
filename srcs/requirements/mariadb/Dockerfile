@@ -17,6 +17,6 @@ COPY tools/script.sh /usr/local/bin/script.sh
 RUN mkdir -p /run/mysqld && \
     chmod +x /usr/local/bin/script.sh
 
-EXPOSE 3306
+EXPOSE ${MYSQL_PORT}
 
 ENTRYPOINT ["/usr/local/bin/script.sh"]

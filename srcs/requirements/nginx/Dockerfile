@@ -14,6 +14,6 @@ COPY tools/script.sh /usr/local/bin/script.sh
 # Set permissions
 RUN chmod +x /usr/local/bin/script.sh
 
-EXPOSE 443
+EXPOSE ${NGINX_PORT}
 
 ENTRYPOINT ["/usr/local/bin/script.sh"]

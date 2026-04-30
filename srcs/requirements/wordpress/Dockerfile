@@ -27,6 +27,6 @@ COPY www.conf /etc/php/8.2/fpm/pool.d/
 COPY tools/script.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/script.sh
 
-EXPOSE 9000
+EXPOSE ${PHP_FPM_PORT}
 
 ENTRYPOINT ["/usr/local/bin/script.sh"]
