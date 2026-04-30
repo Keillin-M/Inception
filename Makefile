@@ -18,7 +18,7 @@ help:
 	@echo "  $(GREEN)make up$(NC)          - Start containers"
 	@echo "  $(GREEN)make down$(NC)        - Stop containers"
 	@echo "  $(GREEN)make re$(NC)          - Restart containers (down + up)"
-	@echo "  $(GREEN)make restart$(NC)     - Quick restart (updates passwords)"
+	@echo "  $(GREEN)make restart$(NC)     - Quick restart of running containers"
 	@echo "  $(GREEN)make logs$(NC)        - Show container logs"
 	@echo "  $(GREEN)make clean$(NC)       - Remove containers and images"
 	@echo "  $(GREEN)make fclean$(NC)      - Remove everything including volumes"
@@ -44,9 +44,9 @@ re: down up
 	@echo "$(GREEN)✓ Containers restarted!$(NC)"
 
 restart:
-	@echo "$(YELLOW)Restarting containers (updating passwords)..$(NC)"
+	@echo "$(YELLOW)Restarting containers..$(NC)"
 	docker compose -f $(COMPOSE_FILE) restart
-	@echo "$(GREEN)✓ Containers restarted and passwords updated!$(NC)"
+	@echo "$(GREEN)✓ Containers restarted!$(NC)"
 
 logs:
 	@echo "$(YELLOW)Showing logs..$(NC)"
@@ -64,7 +64,7 @@ fclean: clean
 	case "$$answer" in \
 		y|Y|yes|YES) \
 			docker compose -f $(COMPOSE_FILE) down -v --rmi all; \
-			sudo rm -rf /home/kmaeda/data/wordpress/* /home/kmaeda/data/mariadb/* || true; \
+			sudo rm -rf $(DATA_DIR)/wordpress/* $(DATA_DIR)/mariadb/* || true; \
 			echo "$(GREEN)✓ Full clean completed!$(NC)" ;; \
 		*) \
 			echo "$(BLUE)Cancelled$(NC)" ;; \

@@ -1,2 +1,10 @@
--- Database and user initialization is handled by script.sh
--- This file is kept for reference only
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
+
+-- The application database. IF NOT EXISTS makes this safe to re-run
+CREATE DATABASE IF NOT EXISTS `${MYSQL_DATABASE}`;
+
+DROP USER IF EXISTS '${MYSQL_USER}'@'%';
+CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON `${MYSQL_DATABASE}`.* TO '${MYSQL_USER}'@'%';
+
+FLUSH PRIVILEGES;

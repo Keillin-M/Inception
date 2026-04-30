@@ -80,4 +80,4 @@ echo "Starting PHP-FPM.."
 # PHP-FPM needs a dir for its socket/PID file
 mkdir -p /run/php
 
-exec php-fpm8.2
+exec php-fpm8.2 -F
