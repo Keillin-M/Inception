@@ -1,16 +1,14 @@
 #!/bin/bash
 set -e
 
-# Render nginx.conf from its template. The first argument to envsubst is a
-# whitelist — only ${DOMAIN_NAME} is substituted, so nginx's own variables
-# ($uri, $args, $document_root, ...) are left untouched.
 envsubst '${DOMAIN_NAME}' \
     < /etc/nginx/nginx.conf.template \
     > /etc/nginx/nginx.conf
 
-# Generate a self-signed TLS certificate on first run only (subject allows
-# self-signed; CN must match the domain so curl/openssl validates the host).
+# Ensure SSL directory exists
 mkdir -p /etc/nginx/ssl
+
+# Generate certificate if it doesn't exist
 if [ ! -f /etc/nginx/ssl/nginx.crt ]; then
     echo "Generating self-signed SSL certificate for ${DOMAIN_NAME}.."
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -21,10 +19,10 @@ if [ ! -f /etc/nginx/ssl/nginx.crt ]; then
     chmod 644 /etc/nginx/ssl/nginx.crt
 fi
 
-# Sanity-check the rendered config before launching nginx
+# Test nginx configuration before starting
 echo "Testing nginx configuration.."
 nginx -t
 
-# Replace this shell with nginx in the foreground so it becomes PID 1
+# Start nginx in foreground so it becomes PID 1
 echo "Starting Nginx.."
 exec nginx -g "daemon off;"
