@@ -1,3 +1,6 @@
+-include srcs/.env
+export
+
 # Colors for output
 GREEN = \033[0;32m
 BLUE = \033[0;34m
@@ -19,6 +22,7 @@ help:
 	@echo "  $(GREEN)make down$(NC)        - Stop containers"
 	@echo "  $(GREEN)make re$(NC)          - Restart containers (down + up)"
 	@echo "  $(GREEN)make restart$(NC)     - Quick restart of running containers"
+	@echo "  $(GREEN)make db$(NC)     	   - "Access MariaDB container"
 	@echo "  $(GREEN)make logs$(NC)        - Show container logs"
 	@echo "  $(GREEN)make clean$(NC)       - Remove containers and images"
 	@echo "  $(GREEN)make fclean$(NC)      - Remove everything including volumes"
@@ -39,6 +43,10 @@ down:
 	@echo "$(YELLOW)Stopping containers..$(NC)"
 	docker compose -f $(COMPOSE_FILE) down
 	@echo "$(GREEN)✓ Containers stopped!$(NC)"
+
+db:
+	@echo "$(YELLOW)Accessing MariaDB container..$(NC)"
+	docker exec -it mariadb mariadb -u $(MYSQL_USER) -p$(MYSQL_PASSWORD) $(MYSQL_DATABASE)
 
 re: down up
 	@echo "$(GREEN)✓ Containers restarted!$(NC)"
