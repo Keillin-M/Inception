@@ -16,7 +16,7 @@ until nc -z mariadb 3306; do
 done
 
 # Wait for the database and user to be ready
-MAX_TRIES=30
+MAX_TRIES=30    
 COUNT=0
 until mariadb -h mariadb -u "${WORDPRESS_DB_USER}" -p"${DB_PASSWORD}" "${WORDPRESS_DB_NAME}" -e ";" 2>/dev/null; do
     COUNT=$((COUNT + 1))
@@ -52,9 +52,9 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --path="$WP_PATH" \
         --url="https://${DOMAIN_NAME}" \
         --title="Inception" \
-        --admin_user="$WP_ADMIN_USER" \
+        --admin_user="$WP_SUPERUSER_USER" \
         --admin_password="$WP_SUPERUSER_PASSWORD" \
-        --admin_email="$WP_ADMIN_EMAIL" \
+        --admin_email="$WP_SUPERUSER_EMAIL" \
         --skip-email \
         --allow-root
     
@@ -64,15 +64,20 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --user_pass="$WP_USER_PASSWORD" \
         --role=subscriber \
         --allow-root
+    
+    # Set secure permissions
+    find "$WP_PATH" -type d -exec chmod 750 {} \;
+    find "$WP_PATH" -type f -exec chmod 640 {} \;
+    chown -R www-data:www-data "$WP_PATH"
 
     echo "WordPress setup complete."
 else
     echo "WordPress already initialized, skipping setup."
 fi
 
-# Set secure permissions
-find "$WP_PATH" -type d -exec chmod 750 {} \;
-find "$WP_PATH" -type f -exec chmod 640 {} \;
+# Always set secure permissions (needed even if already initialized)
+find "$WP_PATH" -type d -exec chmod 755 {} \;
+find "$WP_PATH" -type f -exec chmod 644 {} \;
 chown -R www-data:www-data "$WP_PATH"
 
 echo "Starting PHP-FPM.."
