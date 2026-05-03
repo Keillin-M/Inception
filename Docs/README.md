@@ -34,23 +34,21 @@ git clone <repo_url> inception
 cd inception
 ```
 
-Build and start the project:
+### 🛠️ Makefile Commands
 
-```bash
-make up
-```
-
-Stop the project:
-
-```bash
-make down
-```
-
-Clean all containers, images, and volumes:
-
-```bash
-make fclean
-```
+| Command | Description |
+| :--- | :--- |
+| `make all` | Builds and starts the entire infrastructure (default). |
+| `make build` | Builds the Docker images. |
+| `make up` | Starts the containers in the background. |
+| `make down` | Stops and removes the containers. |
+| `make re` | Full restart: stops, removes, and starts everything again. |
+| `make restart` | Quickly restarts running containers. |
+| `make db` | Connects to the MariaDB container shell. |
+| `make logs` | Follows the logs of all services. |
+| `make clean` | Removes containers and images. |
+| `make fclean` | Deep clean: removes containers, images, volumes, and local data. |
+| `make help` | Shows available commands. |
 
 ---
 
@@ -89,7 +87,7 @@ Docker is used to isolate each service into its own container, ensuring modulari
 | Heavy and slower     | Lightweight and fast     |
 | More resource usage  | Efficient resource usage |
 
-Docker is usually chosen for its efficiency and faster deployment.
+Docker was chosen for its efficiency and faster deployment.
 
 ---
 
@@ -133,6 +131,7 @@ Volumes are used for database and WordPress data persistence.
 * Docker Compose Documentation: [https://docs.docker.com/compose/](https://docs.docker.com/compose/)
 * NGINX Documentation: [https://nginx.org/en/docs/](https://nginx.org/en/docs/)
 * WordPress Documentation: [https://wordpress.org/documentation/](https://wordpress.org/documentation/)
+* Inception Tutorial: [https://medium.com/@ssterdev/inception-guide-42-project-part-i-7e3af15eb671] (https://medium.com/@ssterdev/inception-guide-42-project-part-i-7e3af15eb671)
 
 ### 🤖 AI Usage
 

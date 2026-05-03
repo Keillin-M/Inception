@@ -10,17 +10,25 @@
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Configuration & Secrets
 
-Before running the project:
+Before running the project, you must set up the environment files.
 
-1. Create a `.env` file
-2. Configure environment variables:
-   - Domain name
-   - Database credentials
-   - WordPress credentials
+### 1. Environment Variables (`srcs/.env`)
+Create a `.env` file in the `srcs/` directory with the following variables:
+- `DOMAIN_NAME`: e.g., `kmaeda.42.fr`
+- `MYSQL_DATABASE`, `MYSQL_USER`: Database setup.
+- `WP_SUPERUSER_USER`, `WP_USER`: WordPress user accounts.
 
-3. Set up secrets if required
+### 2. Docker Secrets (`secrets/`)
+Create a `secrets/` folder in the root directory and add the following plain text files:
+- `db_root_password.txt`
+- `db_password.txt`
+- `wp_superuser_password.txt`
+- `wp_user_password.txt`
+
+> [!IMPORTANT]
+> Never commit these files to version control. Ensure they are listed in your `.gitignore`.
 
 ---
 
@@ -30,7 +38,7 @@ Build and start:
 
 ```bash
 make up
-````
+```
 
 Rebuild:
 
@@ -46,36 +54,34 @@ make down
 
 ---
 
-## 🐳 Docker Commands
+## 🐳 Container & Volume Management
 
-List containers:
+### Container Commands
+- **List running containers**: `docker ps`
+- **Access a shell inside a container**: `docker exec -it <container_name> bash`
+- **Follow logs**: `docker logs -f <container_name>`
 
-```bash
-docker ps
-```
-
-Access a container:
-
-```bash
-docker exec -it <container_name> bash
-```
-
-View logs:
-
-```bash
-docker logs <container_name>
-```
+### Volume Commands
+- **List volumes**: `docker volume ls`
+- **Inspect a volume**: `docker volume inspect <volume_name>`
+- **Remove all unused volumes**: `docker volume prune`
 
 ---
 
 ## 💾 Data Persistence
 
-Data is stored in Docker volumes:
+The project uses host-bind volumes to ensure data persists even if containers are removed.
 
-* WordPress files
-* MariaDB database
+### Host Paths
+- **WordPress Data**: `/home/${USER}/data/wordpress`
+- **Database Data**: `/home/${USER}/data/mariadb`
 
-Volumes ensure data is not lost when containers stop.
+### Persistence Logic
+Volumes map these host directories to internal container paths:
+* **WordPress**: Maps host folder to `/var/www/html`
+* **MariaDB**: Maps host folder to `/var/lib/mysql`
+
+This setup ensures that all site content, plugins, and database records remain intact across `make re` or system restarts.
 
 ---
 
