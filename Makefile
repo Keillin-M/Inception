@@ -22,7 +22,7 @@ help:
 	@echo "  $(GREEN)make down$(NC)        - Stop containers"
 	@echo "  $(GREEN)make re$(NC)          - Restart containers (down + up)"
 	@echo "  $(GREEN)make restart$(NC)     - Quick restart of running containers"
-	@echo "  $(GREEN)make db$(NC)     	   - "Access MariaDB container"
+	@echo "  $(GREEN)make db$(NC)     	   - Access MariaDB container"
 	@echo "  $(GREEN)make logs$(NC)        - Show container logs"
 	@echo "  $(GREEN)make clean$(NC)       - Remove containers and images"
 	@echo "  $(GREEN)make fclean$(NC)      - Remove everything including volumes"
