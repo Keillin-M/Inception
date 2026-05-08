@@ -19,6 +19,7 @@ Create a `.env` file in the `srcs/` directory with the following variables:
 - `DOMAIN_NAME`: e.g., `kmaeda.42.fr`
 - `MYSQL_DATABASE`, `MYSQL_USER`: Database setup.
 - `WP_SUPERUSER_USER`, `WP_USER`: WordPress user accounts.
+- `MYSQL_PORT`,`PHP_FPM_PORT`, `NGINX_PORT`: Default ports.
 
 ### 2. Docker Secrets (`secrets/`)
 Create a `secrets/` folder in the root directory and add the following plain text files:
@@ -90,12 +91,12 @@ This setup ensures that all site content, plugins, and database records remain i
 ```
 .
 ├── Makefile
-├── docker-compose.yml
 ├── srcs/
 │   ├── requirements/
 │   │   ├── nginx/
 │   │   ├── wordpress/
 │   │   └── mariadb/
+|   ├── docker-compose.yml
 │   └── .env
 ```
 

@@ -1,0 +1,5 @@
+# Ignore secrets
+secrets/*.txt
+
+# Ignore environment files
+srcs/.env
